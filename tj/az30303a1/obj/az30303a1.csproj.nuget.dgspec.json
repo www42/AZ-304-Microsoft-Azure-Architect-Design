@@ -1,0 +1,64 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/tj/git/az-304/tj/az30303a1/az30303a1.csproj": {}
+  },
+  "projects": {
+    "/Users/tj/git/az-304/tj/az30303a1/az30303a1.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/tj/git/az-304/tj/az30303a1/az30303a1.csproj",
+        "projectName": "az30303a1",
+        "projectPath": "/Users/tj/git/az-304/tj/az30303a1/az30303a1.csproj",
+        "packagesPath": "/Users/tj/.nuget/packages/",
+        "outputPath": "/Users/tj/git/az-304/tj/az30303a1/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/tj/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.6.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.301/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

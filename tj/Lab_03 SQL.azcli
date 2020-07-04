@@ -1,0 +1,12 @@
+dotnet --info
+
+mkdir az30303a1
+cd az30303a1/
+
+dotnet new console
+
+# edit az30303a1.csproj
+# edit Program.cs
+
+dotnet restore
+dotnet run
