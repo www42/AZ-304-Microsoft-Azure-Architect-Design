@@ -236,7 +236,11 @@ The main tasks for this exercise are as follows:
 
 1. Select the ellipsis symbol in the upper right corner of the **Condition** tile, in the pop-up menu, select **Rename**, and replace **Condition** with the text **If a virtual machine in the resource group has changed**. 
 
-1. Selet the **Choose a value** text box on the left hand side of the condition, in the pop up window, and in the **Dynamic content** tab, select the **Body** entry.
+1. Select the **Choose a value** text box on the left hand side of the condition, in the pop up window, and in the **Expression** tab, enter this expression:
+
+   ```
+   triggerBody()?['data']['operationName']
+   ```
 
 1. Ensure that **is equal to** appears in the middle element of the condition and, in the **Choose a value** text box on the right hand side, type the value representing the opearation you intend to monitor:
 
@@ -273,6 +277,8 @@ The main tasks for this exercise are as follows:
     | Subject | type **Resource updated:** and, in the **Dynamic Content** column to the right of the **Send an email** pane, select **Subject** |
     | Body | type **Resource group:**, in the search text box under the **Dynamic Content** column to the right of the **Send an email** pane, type and select **Topic**, back in the **Body** text box, on a new line, type **Event type:**, in the search text box under the **Dynamic Content** column to the right of the **Send an email** pane, type and select **Event Type**, back in the **Body** text box, on a new line type **Event ID:**, in the search text box under the **Dynamic Content** column to the right of the **Send an email** pane, type and select **ID**, back in the **Body** text box, on a new line, type **Event Time:**, and in the search text box under the **Dynamic Content** column to the right of the **Send an email** pane, type and select **Event Time**. |
 
+    **You may need to confirm the account by going into the mailbox and entering your phone number.**
+
 1. On the **Logic Apps Designer** blade, select **Save**. 
 
 
@@ -303,6 +309,7 @@ The main tasks for this exercise are as follows:
     | --- | --- |
     | Name | **event-subscription-az30304a-LabRG** |
     | Event Schema | **Event Grid Schema** |
+    | System Topic name | **event-topic-az30304a-LabRG** |
     | Filter to Event Types | **Resource Write Success**, **Resource Delete Success**, **Resource Action Success** |
     | Endpoint Type | **Web Hook** | 
     | Endpoint | the URL string you copied at the beginning of this task |

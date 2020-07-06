@@ -100,7 +100,7 @@ The main tasks for this exercise are as follows:
    az deployment group create \
    --resource-group az30306a-LabRG \
    --template-file azuredeploy30306rga.json \
-   --parameters @azuredeploy30306rga.parameters.json
+   --parameters azuredeploy30306rga.parameters.json
    ```
 
     > **Note**: Wait for the deployment to complete. The deployment might take about than 5 minutes.
