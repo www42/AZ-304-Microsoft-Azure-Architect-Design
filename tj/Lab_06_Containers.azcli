@@ -1,0 +1,106 @@
+az account show
+az group list -o table
+
+# Exercise 0: Prepare the lab environment
+# ---------------------------------------
+cd Allfiles/Labs/06/
+
+ll azuredeploy30306suba.json           # RG only
+ll azuredeploy30306rga.json            # VM, Vnet, NSG, PiP
+ll azuredeploy30306rga.parameters.json 
+
+
+LOCATION='westeurope'
+
+az deployment sub create \
+    --location $LOCATION \
+    --template-file azuredeploy30306suba.json \
+    --parameters rgName=az30306a-LabRG rgLocation=$LOCATION
+
+az deployment group create \
+    --resource-group az30306a-LabRG \
+    --template-file azuredeploy30306rga.json \
+    --parameters azuredeploy30306rga.parameters.json
+
+
+# ---- RDP Session to VM -----
+$adminKey = 'HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073}'
+$userKey = 'HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A8-37EF-4b3f-8CFC-4F3A74704073}'
+Set-ItemProperty -Path $adminKey -Name 'IsInstalled' -Value 0
+Set-ItemProperty -Path $userKey -Name 'IsInstalled' -Value 0
+Stop-Process -Name Explorer
+
+$tempDir = New-Item -type Directory -Path 'C:\Temp' -Force
+Invoke-WebRequest -Uri https://dot.net/v1/dotnet-install.ps1 -OutFile $tempDir\dotnet-install.ps1
+Set-Location -Path $tempDir
+Get-ChildItem -File -Filter 'dotnet-install.ps1' | Unblock-File
+.\dotnet-install.ps1 -InstallDir "C:\Program Files\dotnet"
+
+$oldPath=(Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).path
+$newPath=$oldPath+';C:\Program Files\dotnet'
+Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH –Value $newPath
+
+$repo = 'git-for-windows'
+$releases = "https://api.github.com/repos/$repo/git/releases"
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+$response = (Invoke-WebRequest -Uri $releases -UseBasicParsing | ConvertFrom-Json)
+$downloadUrl = $response.assets | where {$_.name -match "-64-bit.exe" -and $_.name -notmatch "rc"} | sort created_at -Descending | select -First 1
+$outputPath = "$tempDir\$($downloadUrl.name)"
+Invoke-RestMethod -Method Get -Uri $DownloadUrl.browser_download_url -OutFile $OutputPath -ErrorAction Stop 
+$arguments = "/SILENT"
+Start-Process $OutputPath $arguments -Wait -ErrorAction Stop
+
+Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; rm .\AzureCLI.msi
+
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+Install-Module DockerMsftProvider -Force
+Install-Package Docker -ProviderName DockerMsftProvider -Force
+If ((Install-WindowsFeature Containers).RestartNeeded ) { Restart-Computer -Force }
+
+# Exercise 1
+# -------------------
+# Still in RDP session to VM
+md C:\az30306a-lab
+cd C:\az30306a-lab
+git clone https://github.com/dotnet/dotnet-docker
+
+cd dotnet-docker/samples/aspnetapp/aspnetapp
+dotnet run
+
+cd ../
+dir 
+notepad Dockerfile
+docker build -t aspnetapp .
+
+docker images
+docker create -p 5000:80 --name aspnetapp-container aspnetapp
+docker ps -a
+docker start aspnetapp-container
+docker ps -a
+
+docker stop aspnetapp-container
+
+
+
+# Exercise 2: Push an image into Azure Container Registry
+# --------------------------------------------------------
+# ---- CloudShell
+RGNAME='az30306b-LabRG'
+LOCATION=$(az group show --name az30306a-LabRG --query location --output tsv)
+az group create --name $RGNAME --location $LOCATION
+
+ACRNAME=az30306b$RANDOM
+az acr create --resource-group $RGNAME --name $ACRNAME --sku Basic
+echo $ACRNAME
+
+az acr update --name $ACRNAME --admin-enabled true
+az acr credential show --name $ACRNAME --resource-group $RGNAME
+
+# ---- RDP session to VM -----
+# nicht in ISE!
+docker login az30306b4631.azurecr.io
+
+docker images
+docker tag aspnetapp az30306b4631.azurecr.io/aspnetapp:v1
+docker push az30306b4631.azurecr.io/aspnetapp:v1
+
