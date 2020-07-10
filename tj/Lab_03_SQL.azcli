@@ -1,5 +1,6 @@
 dotnet --info
 
+cd tj
 mkdir az30303a1
 cd az30303a1/
 
