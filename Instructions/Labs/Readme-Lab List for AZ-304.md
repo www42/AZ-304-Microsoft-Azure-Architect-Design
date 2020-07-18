@@ -3,12 +3,6 @@
  
 **Source repo: [https://github.com/MicrosoftLearning/AZ-304-Microsoft-Azure-Architect-Design/](https://github.com/MicrosoftLearning/AZ-304-Microsoft-Azure-Architect-Design/)**
 
-**Module 1 Lab**
-
-Lab title: Implementing Containers on Azure
-
-- Current file name: **Module_1_Lab.md**
-- Previous file name: LAB_01_Deploying Azure IaaS Solutions.md
 
 **Module 3 Lab**
 

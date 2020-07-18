@@ -369,8 +369,6 @@ The main tasks for this exercise are as follows:
 
 1. In the **Hyper-V Manager** console, select the newly imported virtual machine and select **Start**. 
 
-1. In the **Hyper-V Manager** console, select the newly imported virtual machine and select **Start**. 
-
 1. In the **Hyper-V Manager** console, verify that the virtual machine is running and select **Connect**. 
 
 1. In the Virtual Machine Connection window to the virtual appliance, on the **License terms** page, select **Accept**. 
