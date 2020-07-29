@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Lab: Implement Azure Logic Apps integration with Azure Event Grid'
+    title: '13: Implement Azure Logic Apps integration with Azure Event Grid'
     module: 'Module 13: Design an Application Architecture'
 ---
 
@@ -124,7 +124,7 @@ The main tasks for this exercise are as follows:
 1. From the Cloud Shell pane, run the following to create a new Azure AD application that you will associate with the service principal you create in the subsequent steps of this task:
 
    ```powershell
-   $password = 'Pa55w.rd1234'
+   $password = 'Pa55w.rd1234.@z304'
    $securePassword = ConvertTo-SecureString -Force -AsPlainText -String $password
    $az30304aadapp = New-AzADApplication -DisplayName 'az30304aadsp' -HomePage 'http://az30304aadsp' -IdentifierUris 'http://az30304aadsp' -Password $securePassword
    ```
@@ -210,7 +210,7 @@ The main tasks for this exercise are as follows:
     | --- | --- |
     | Connection Name | **az30304egconnection** |
     | Client ID | the value of the **ApplicationId** property you identified earlier in this exercise |
-    | Client Secret | **Pa55w.rd1234** |
+    | Client Secret | **Pa55w.rd1234.@z304** |
     | Tenant | the value of the **TenantId** property you identified earlier in this exercise |
 
 1. In the **When a resource event occurs** tile, specify the following settings:

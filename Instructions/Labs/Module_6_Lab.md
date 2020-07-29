@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Lab: Implementing Azure SQL Database-Based Applications'
+    title: '6: Implementing Azure SQL Database-Based Applications'
     module: 'Module 6: Design a Solution for Databases'
 ---
 
@@ -47,7 +47,7 @@ Estimated Time: 60 minutes
 -  None
 
 
-## Exercise 1: Implement Azure SQL Database
+### Exercise 1: Implement Azure SQL Database
   
 The main tasks for this exercise are as follows:
 

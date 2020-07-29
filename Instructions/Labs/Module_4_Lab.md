@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Lab: Managing Azure AD Authentication and Authorization'
+    title: '4: Managing Azure AD Authentication and Authorization'
     module: 'Module 4: Design Authentication and Authorization'
 ---
 
