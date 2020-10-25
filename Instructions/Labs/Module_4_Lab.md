@@ -48,7 +48,7 @@ Estimated Time: 120 minutes
 
 ## Lab Files
 
--  \\\\AZ303\\AllFiles\\Labs\\10\\azuredeploy30310suba.json
+-  \\\\AZ304\\AllFiles\\Labs\\10\\azuredeploy30410suba.json
 
 
 ## Instructions
@@ -77,7 +77,10 @@ The main tasks for this exercise are as follows:
     ```powershell
     Test-AzDnsAvailability -DomainNameLabel <custom-label> -Location '<location>'
     ```
-      > **Note**: To identify Azure regions where you can provision Azure VMs, refer to [https://azure.microsoft.com/en-us/regions/offers/](https://azure.microsoft.com/en-us/regions/offers/)
+      > **Note**: To identify Azure regions where you can provision Azure VMs, refer to [https://azure.microsoft.com/en-us/regions/offers/](https://azure.microsoft.com/en-us/regions/offers/), you can also get the list of the regions using **Powershell cmdlet**
+      ```powershell
+      Get-AzLocation | FT
+      ```
 
 1. Verify that the command returned **True**. If not, rerun the same command with a different value of the `<custom-label>` until the command returns **True**.
 
@@ -86,18 +89,20 @@ The main tasks for this exercise are as follows:
 
 #### Task 2: Deploy an Azure VM running an AD DS domain controller by using an Azure Resource Manager QuickStart template
 
-1. In the Azure portal, in the toolbar of the Cloud Shell pane, select the **Upload/Download files** icon, in the drop-down menu select **Upload**, and upload the file **\\\\AZ303\\AllFiles\Labs\\10\\azuredeploy30310suba.json** into the Cloud Shell home directory.
+1. In the Azure portal, in the toolbar of the Cloud Shell pane, select the **Upload/Download files** icon, in the drop-down menu select **Upload**, and upload the file **\\\\AZ304\\AllFiles\Labs\\10\\azuredeploy30410suba.json** into the Cloud Shell home directory.
 
 1. From the Cloud Shell pane, run the following to create a resource groups (replace the `<Azure region>` placeholder with the name of the Azure region that you specified in the previous task):
 
    ```powershell
    $location = '<Azure region>'
+   ```
+   ```powershell
    New-AzSubscriptionDeployment `
      -Location $location `
-     -Name az30310subaDeployment `
-     -TemplateFile $HOME/azuredeploy30310suba.json `
+     -Name az30410subaDeployment `
+     -TemplateFile $HOME/azuredeploy30410suba.json `
      -rgLocation $location `
-     -rgName 'az30310a-labRG'
+     -rgName 'az30410a-labRG'
    ```
 
 1. In the Azure portal, close the **Cloud Shell** pane.
@@ -108,14 +113,14 @@ The main tasks for this exercise are as follows:
 
 1. On the **Create an Azure VM with a new AD Forest** blade, select **Edit parameters**.
 
-1. On the **Edit parameters** blade, select **Load file**, in the **Open** dialog box, select **\\\\AZ303\\AllFiles\Labs\\10\\azuredeploy30310rga.parameters.json**, select **Open**, and then select **Save**. 
+1. On the **Edit parameters** blade, select **Load file**, in the **Open** dialog box, select **\\\\AZ304\\AllFiles\Labs\\10\\azuredeploy30410rga.parameters.json**, select **Open**, and then select **Save**. 
 
 1. On the **Create an Azure VM with a new AD Forest** blade, specify the following settings (leave others with their existing values):
 
     | Setting | Value | 
     | --- | --- |
     | Subscription | the name of the Azure subscription you are using in this lab |
-    | Resource group | **az30310a-labRG** |
+    | Resource group | **az30410a-labRG** |
     | Dns Prefix | the DNS hostname you identified in the previous task| 
 
 1. On the **Create an Azure VM with a new AD Forest** blade, select the checkbox **I agree to the terms and conditions above** and select **Purchase**.
@@ -154,7 +159,7 @@ The main tasks for this exercise are as follows:
 
 1. Refresh the browser page displaying the Azure portal, search for and select **Azure Active Directory** and, on the Azure Active Directory blade, select **Switch tenant**.
 
-1. In the **Directory + subscription** blade, select **Adatum Lab**. 
+1. In the **Directory + subscription** blade, on the **Adatum Lab** card, click **Switch**.
 
 
 #### Task 2: Create and configure Azure AD users
@@ -171,8 +176,8 @@ The main tasks for this exercise are as follows:
 
     | Setting | Value |
     | --- | --- |
-    | User name | **az30310-aaduser1** |
-    | Name | **az30310-aaduser1** |
+    | User name | **az30410-aaduser1** |
+    | Name | **az30410-aaduser1** |
     | Auto-generate password | enabled |
     | Show password | enabled |
     | Roles | **Global administrator** |
@@ -182,9 +187,9 @@ The main tasks for this exercise are as follows:
 
 1. On the **New user** blade, select **Create**
 
-1. On the lab computer, open an **InPrivate** browser window and sign in to the [Azure portal](https://portal.azure.com) using the newly created **az30310-aaduser1** user account. When prompted to update the password, change the password to **Pa55w.rd1234**. 
+1. On the lab computer, open an **InPrivate** browser window and sign in to the [Azure portal](https://portal.azure.com) using the newly created **az30410-aaduser1** user account. When prompted to update the password, change the password to **Pa55w.rd1234**. 
 
-1. Sign out as the **az30310-aaduser1** user from the Azure portal and close the InPrivate browser window.
+1. Sign out as the **az30410-aaduser1** user from the Azure portal and close the InPrivate browser window.
 
 
 #### Task 3: Activate and assign Azure AD Premium P2 licensing
@@ -201,7 +206,7 @@ The main tasks for this exercise are as follows:
 
 1. On the **Azure Active Directory Premium P2 | Licensed users** blade, select **+ Assign**. 
 
-1. On the **Assign license** blade, select **Users**, and on the **Users** blade, select both your account and the **az30310-aaduser1** user account.
+1. On the **Assign license** blade, select **Users**, and on the **Users** blade, select both your account and the **az30410-aaduser1** user account.
 
 1. Back on the **Assign license** blade, select **Assignment options**, review the options listed on the **License options** blade, and select **OK**.
 
@@ -212,7 +217,7 @@ The main tasks for this exercise are as follows:
   
 The main tasks for this exercise are as follows:
 
-1. Assign a custom domain name to the Azur AD tenant
+1. Assign a custom domain name to the Azure AD tenant
 
 1. Configure AD DS in the Azure VM
 
@@ -221,9 +226,9 @@ The main tasks for this exercise are as follows:
 1. Configure properties of synchronized user accounts
 
 
-#### Task 1: Assign a custom domain name to the Azur AD tenant
+#### Task 1: Assign a custom domain name to the Azure AD tenant
 
-1. In the Azure portal, navigate to the **Adatum Lab | Overview** blade.
+1. In the Azure portal, navigate to the **Azure Active Directory Adatum Lab | Overview** blade.
 
 1. On the **Adatum Lab | Overview** blade, select **Custom domain names**.
 
@@ -244,9 +249,9 @@ The main tasks for this exercise are as follows:
 
 > **Note**: Make sure that the deployment of the Azure VM you initiated at the beginning of the lab has completed before you start this exercise.
 
-1. In the Azure portal, search for and select **Virtual machines** and, on the **Virtual machines** blade, select **az30310a-vm1**.
+1. In the Azure portal, search for and select **Virtual machines** and, on the **Virtual machines** blade, select **az30410a-vm1**.
 
-1. On the **az30310a-vm1** blade, select **Connect**, in the drop-down menu, select **RDP**, on the **RDP** tab of the **az30310a-vm1 | Connect** blade, in the **IP address** drop-down list, select the **Load balancer public IP address** entry, and then select **Download RDP File**.
+1. On the **az30410a-vm1** blade, select **Connect**, in the drop-down menu, select **RDP**, on the **RDP** tab of the **az30410a-vm1 | Connect** blade, in the **IP address** drop-down list, select the **Load balancer public IP address** entry, and then select **Download RDP File**.
 
 1. When prompted, sign in with the following credentials:
 
@@ -255,9 +260,9 @@ The main tasks for this exercise are as follows:
     | User Name | **Student** |
     | Password | **Pa55w.rd1234** |
 
-1. Within the Remote Desktop session to **az30310a-vm1**, in the Server Manager window, select **Local Server**, select the **On** link next to the **IE Enhanced Security Configuration** label, and, in the **IE Enhanced Security Configuration** dialog box, select both **Off** options.
+1. Within the Remote Desktop session to **az30410a-vm1**, in the Server Manager window, select **Local Server**, select the **On** link next to the **IE Enhanced Security Configuration** label, and, in the **IE Enhanced Security Configuration** dialog box, select both **Off** options.
 
-1. Within the Remote Desktop session to **az30310a-vm1**, in the Server Manager window, select **Tools** and, in the drop-down menu, select **Active Directory Administrative Center**
+1. Within the Remote Desktop session to **az30410a-vm1**, in the Server Manager window, select **Tools** and, in the drop-down menu, select **Active Directory Administrative Center**
 
 1. In **Active Directory Administrative Center**, select **adatum (local)**, in the **Tasks** pane, select **New**, and, in the cascading menu, select **Organizational Unit**.
 
@@ -280,7 +285,7 @@ The main tasks for this exercise are as follows:
 
 #### Task 3: Install Azure AD Connect
 
-1. Within the Remote Desktop session to **az30310a-vm1**, start Internet Explorer, navigate to the [Azure portal](https://portal.azure.com), and sign in by using the **az30310-aaduser1** user account you created the previous exercise. When prompted, specify the full user name you recorded and the **Pa55w.rd1234** password.
+1. Within the Remote Desktop session to **az30410a-vm1**, start Internet Explorer, navigate to the [Azure portal](https://portal.azure.com), and sign in by using the **az30410-aaduser1** user account you created the previous exercise. When prompted, specify the full user name you recorded and the **Pa55w.rd1234** password.
 
 1. In the Azure portal, search for and select **Azure Active Directory** and, on the **Adatum Lab | Overview** blade, select **Azure AD Connect**.
 
@@ -298,7 +303,7 @@ The main tasks for this exercise are as follows:
 
 1. On the **User sign-in** page, ensure that only the **Password Hash Synchronization** is enabled and select **Next**.
 
-1. On the **Connect to Azure AD** page, authenticate by using the credentials of the **az30310-aaduser1** user account you created in the previous exercise and select **Next**. 
+1. On the **Connect to Azure AD** page, authenticate by using the credentials of the **az30410-aaduser1** user account you created in the previous exercise and select **Next**. 
 
 1. On the **Connect your directories** page, select the **Add Directory** button to the right of the **adatum.com** forest entry.
 
@@ -332,7 +337,7 @@ The main tasks for this exercise are as follows:
 
 #### Task 4: Configure properties of synchronized user accounts
 
-1. Within the Remote Desktop session to **az30310a-vm1**, in the Internet Explorer window displaying the Azure portal, navigate to the **Users - All users** blade of the Adatum Lab Azure AD tenant.
+1. Within the Remote Desktop session to **az30410a-vm1**, in the Internet Explorer window displaying the Azure portal, navigate to the **Users - All users** blade of the Adatum Lab Azure AD tenant.
 
 1. On the **Users | All users** blade, note that the list of user objects includes the **aduser1** account, with the **Windows Server AD** appearing in the **Source** column.
 
@@ -346,11 +351,11 @@ The main tasks for this exercise are as follows:
 
 1. On the **aduser1 | Profile** blade, in the **Job info** section, note that the **Department** attribute is not set.
 
-1. Within the Remote Desktop session to **az30310a-vm1**, switch to **Active Directory Administrative Center**, select the **aduser1** entry in the list of objects in the **ToSync** OU, and, in the **Tasks** pane, in the **ToSync** section, select **Properties**.
+1. Within the Remote Desktop session to **az30410a-vm1**, switch to **Active Directory Administrative Center**, select the **aduser1** entry in the list of objects in the **ToSync** OU, and, in the **Tasks** pane, in the **ToSync** section, select **Properties**.
 
 1. In the **aduser1** window, in the **Organization** section, in the **Department** text box, type **Sales**, and select **OK**.
 
-1. Within the Remote Desktop session to **az30310a-vm1**, start **Windows PowerShell**.
+1. Within the Remote Desktop session to **az30410a-vm1**, start **Windows PowerShell**.
 
 1. From the **Administrator: Windows PowerShell** console, run the following to start Azure AD Connect delta synchronization:
 
@@ -390,7 +395,7 @@ The main tasks for this exercise are as follows:
 
 #### Task 1: Disable Azure AD security defaults.
 
-1. Within the Remote Desktop session to **az30310a-vm1**, in the Internet Explorer window displaying the Azure portal, navigate to the **Adatum Lab | Overview** blade of the Adatum Lab Azure AD tenant.
+1. Within the Remote Desktop session to **az30410a-vm1**, in the Internet Explorer window displaying the Azure portal, navigate to the **Adatum Lab | Overview** blade of the Adatum Lab Azure AD tenant.
 
 1. On the **Adatum Lab | Overview** blade, in the **Manage** section, select **Properties**.
 
@@ -420,7 +425,7 @@ The main tasks for this exercise are as follows:
 
 #### Task 3: Verify Azure AD conditional access
 
-1. Within the Remote Desktop session to **az30310a-vm1**, start a new **InPrivate Browsing** Internet Explorer window and navigate to the Access Panel Applications portal [https://account.activedirectory.windowsazure.com](https://account.activedirectory.windowsazure.com).
+1. Within the Remote Desktop session to **az30410a-vm1**, start a new **InPrivate Browsing** Internet Explorer window and navigate to the Access Panel Applications portal [https://account.activedirectory.windowsazure.com](https://account.activedirectory.windowsazure.com).
 
 1. When prompted, sign in by using the synchronized Azure AD account of the **aduser1**, using the full user name you recorded in the previous exercise and the **Pa55w.rd1234** password. 
 
@@ -437,13 +442,13 @@ The main tasks for this exercise are as follows:
 
 #### Task 4: Remove Azure resources deployed in the lab
 
-1. Within the Remote Desktop session to **az30310a-vm1**, start Internet Explorer and browse to the Microsoft Online Services Sign-In Assistant for IT Professionals RTW at [https://go.microsoft.com/fwlink/p/?LinkId=286152](https://go.microsoft.com/fwlink/p/?LinkId=286152). 
+1. Within the Remote Desktop session to **az30410a-vm1**, start Internet Explorer and browse to the Microsoft Online Services Sign-In Assistant for IT Professionals RTW at [https://go.microsoft.com/fwlink/p/?LinkId=286152](https://go.microsoft.com/fwlink/p/?LinkId=286152). 
 
 1. On the Microsoft Online Services Sign-In Assistant for IT Professionals RTW download page, select **Download**, on the **Choose the download you want** page, select **en\msoidcli_64.msi**, and select **Next**. 
 
 1. When prompted, run **Microsoft Online Services Sign-in Assistant Setup** with the default options.
 
-1. Once the setup completes, within the Remote Desktop session to **az30310a-vm1**, start **Windows PowerShell** console.
+1. Once the setup completes, within the Remote Desktop session to **az30410a-vm1**, start **Windows PowerShell** console.
 
 1. In the **Administrator: Windows PowerShell** window, run the following to install the required PowerShell module:
 
@@ -458,7 +463,7 @@ The main tasks for this exercise are as follows:
    Connect-MsolService
    ```
 
-1. When prompted to authenticate, provide the credentials of the **az30310-aaduser1** user account.
+1. When prompted to authenticate, provide the credentials of the **az30410-aaduser1** user account.
 
 1. In the **Administrator: Windows PowerShell** window, run the following to disable Azure AD Connect synchronization:
 
@@ -468,9 +473,7 @@ The main tasks for this exercise are as follows:
 
 1. From the lab computer, in the browser window displaying the Azure portal, navigate to the **Azure Active Directory Premium P2 - Licensed users** blade, select the user accounts to which you assigned licenses in this lab, select **Remove license**, and, when prompted to confirm, select **OK**.
 
-1. In the Azure portal, navigate to the **Users - All users** blade and ensure that all user accounts you created in this lab have the **Azure Active Directory** entry in the **Source** column. 
-
-    > **Note**: If that's not the case, refresh the browser page.
+1. In the Azure portal, navigate to the **Users - All users** blade and ensure that all user accounts you created in this lab are no longer listed as **Directory synced**.
 
 1. On the **Users - All users** blade, select each user accounts you created in this lab and select **Delete** in the toolbar. 
 
@@ -480,12 +483,12 @@ The main tasks for this exercise are as follows:
 
 1. Navigate back to the **Delete directory 'Adatum Lab'** blade and select **Delete**.
 
-1. Within the Remote Desktop session to **az30310a-vm1**, in the browser window displaying the Azure portal, start a PowerShell session within the Cloud Shell pane.
+1. Within the Remote Desktop session to **az30410a-vm1**, in the browser window displaying the Azure portal, start a PowerShell session within the Cloud Shell pane.
 
 1. From the Cloud Shell pane, run the following to list the resource group you created in this exercise:
 
    ```powershell
-   Get-AzResourceGroup -Name 'az30310*'
+   Get-AzResourceGroup -Name 'az30410*'
    ```
 
     > **Note**: Verify that the output contains only the resource group you created in this lab. This group will be deleted in this task.
@@ -493,7 +496,7 @@ The main tasks for this exercise are as follows:
 1. From the Cloud Shell pane, run the following to delete the resource group you created in this lab
 
    ```powershell
-   Get-AzResourceGroup -Name 'az30310*' | Remove-AzResourceGroup -Force -AsJob
+   Get-AzResourceGroup -Name 'az30410*' | Remove-AzResourceGroup -Force -AsJob
    ```
 
 1. Close the Cloud Shell pane.
