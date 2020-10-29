@@ -4,12 +4,7 @@
 
 # similar to AZ-300T04 Mod 01 Lab
 
-# MSDN Subscription
-$SubscriptionName = "MSDN-Plattformen"
-$SubscriptionId = "ffcb38a5-8428-40c4-98b7-77013eac7ec5"
-$TenantId = "819ebf55-0973-4703-b006-581a48f25961"
-
-Connect-AzAccount -Tenant $TenantId -Subscription $SubscriptionId
+Connect-AzAccount
 Get-AzContext  | fl *
 
 # Exercise 0: Prepare the lab environment
@@ -18,7 +13,7 @@ Get-AzContext  | fl *
 dir Allfiles/Labs/04/azuredeploy30304suba.json              # RG
 dir Allfiles/Labs/04/azuredeploy30304rga.json               # VM, Nic, VNet, PiP, NSG
 
-cp  Allfiles/Labs/04/azuredeploy30304*.json $env:HOME
+cp  Allfiles/Labs/04/azuredeploy30304*.json $HOME
 
 # Deploy RG
 $location = 'westeurope'
@@ -40,10 +35,11 @@ New-AzResourceGroupDeployment `
 $rga = Get-Job -Id 1
 Receive-Job -Job $rga
 
+Register-AzResourceProvider -ProviderNamespace 'Microsoft.EventGrid'
 
 # Exercise 1: Configure authentication and authorization for an Azure logic app
 # -----------------------------------------------------------------------------
-$password = 'Pa55w.rd1234'
+$password = 'Pa55w.rd1234.@z304'
 $securePassword = ConvertTo-SecureString -Force -AsPlainText -String $password
 $az30304aadapp = New-AzADApplication -DisplayName 'az30304aadsp' `
                                      -HomePage 'http://az30304aadsp' `
