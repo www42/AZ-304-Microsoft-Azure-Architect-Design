@@ -164,7 +164,7 @@ The main tasks for this exercise are as follows:
 
 #### Task 2: Create and configure Azure AD users
 
-1. On the **Adatum Lab | Overview** Azure Active Directory blade, in the **Manage** section, select **Users**, on the **Users | All users** blade, select your user account to display its **Profile** settings. 
+1. On the **Adatum Lab \| Overview** Azure Active Directory blade, in the **Manage** section, select **Users**, on the **Users | All users** blade, select your user account to display its **Profile** settings. 
 
 1. On the profile blade of your user account, select **Edit**, in the **Settings** section, set **Usage location** to **United States** and save the change.
 
@@ -196,15 +196,15 @@ The main tasks for this exercise are as follows:
 
 1. Back in the browser window displaying the Azure portal, navigate to the **Overview** blade of the **Adatum Lab** Azure AD tenant and, in the **Manage** section, select **Licenses**.
 
-1. On the **Licenses | Overview** blade, select **All products**, select **+ Try/Buy**.
+1. On the **Licenses \| Overview** blade, select **All products**, select **+ Try/Buy**.
 
 1. On the **Activate** blade, in the **Azure AD Premium P2** section, select **Free trial** and then select **Activate**. 
 
-1. Refresh the browser window showing the **Licenses | All products** blade to verify that the activation was successful. 
+1. Refresh the browser window showing the **Licenses \| All products** blade to verify that the activation was successful. 
 
 1. On the **Licenses - All products** blade, select the **Azure Active Directory Premium P2** entry. 
 
-1. On the **Azure Active Directory Premium P2 | Licensed users** blade, select **+ Assign**. 
+1. On the **Azure Active Directory Premium P2 \| Licensed users** blade, select **+ Assign**. 
 
 1. On the **Assign license** blade, select **Users**, and on the **Users** blade, select both your account and the **az30410-aaduser1** user account.
 
@@ -230,13 +230,13 @@ The main tasks for this exercise are as follows:
 
 1. In the Azure portal, navigate to the **Azure Active Directory Adatum Lab | Overview** blade.
 
-1. On the **Adatum Lab | Overview** blade, select **Custom domain names**.
+1. On the **Adatum Lab \| Overview** blade, select **Custom domain names**.
 
-1. On the **Adatum Lab | Custom domain names** blade, identify the primary, default DNS domain name associated with the Azure AD tenant. 
+1. On the **Adatum Lab \| Custom domain names** blade, identify the primary, default DNS domain name associated with the Azure AD tenant. 
 
     >**Note**: Record the value of the primary DNS name of the Azure AD tenant. You will need it in the next task.
 
-1. On the **Adatum Lab | Custom domain names** blade, select **+ Add custom domain**.
+1. On the **Adatum Lab \| Custom domain names** blade, select **+ Add custom domain**.
 
 1. On the **Custom domain name** blade, in the **Custom domain name** text box, type **adatum.com**, and select **Add domain**. 
 
@@ -248,6 +248,10 @@ The main tasks for this exercise are as follows:
 #### Task 2: Configure AD DS in the Azure VM
 
 > **Note**: Make sure that the deployment of the Azure VM you initiated at the beginning of the lab has completed before you start this exercise.
+
+1. In the Azure portal, search for and select **Azure Active Directory** and, on the Azure Active Directory blade, select **Switch tenant**.
+
+1. On the **Switch tenant** blade, click the **Switch** button in the tile representing the Azure AD tenant associated with the Azure subscription into which you deployed the **az30410a-vm1** Azure VM in the previous exercise of this lab. 
 
 1. In the Azure portal, search for and select **Virtual machines** and, on the **Virtual machines** blade, select **az30410a-vm1**.
 
@@ -339,17 +343,17 @@ The main tasks for this exercise are as follows:
 
 1. Within the Remote Desktop session to **az30410a-vm1**, in the Internet Explorer window displaying the Azure portal, navigate to the **Users - All users** blade of the Adatum Lab Azure AD tenant.
 
-1. On the **Users | All users** blade, note that the list of user objects includes the **aduser1** account, with the **Windows Server AD** appearing in the **Source** column.
+1. On the **Users \| All users** blade, note that the list of user objects includes the **aduser1** account, with the **Yes** entry appearing in the **Directory synced** column.
 
     > **Note**: You might have to wait a few minutes and select **Refresh** for the **aduser1** user account to appear.
 
-1. On the **Users | All users** blade, select the **aduser1** entry.
+1. On the **Users \| All users** blade, select the **aduser1** entry.
 
-1. On the **aduser1 | Profile** blade, note the full name of the user account.
+1. On the **aduser1 \| Profile** blade, note the full name of the user account.
 
     > **Note**: Record the full user name. You will need it in the next exercise.
 
-1. On the **aduser1 | Profile** blade, in the **Job info** section, note that the **Department** attribute is not set.
+1. On the **aduser1 \| Profile** blade, in the **Job info** section, note that the **Department** attribute is not set.
 
 1. Within the Remote Desktop session to **az30410a-vm1**, switch to **Active Directory Administrative Center**, select the **aduser1** entry in the list of objects in the **ToSync** OU, and, in the **Tasks** pane, in the **ToSync** section, select **Properties**.
 
@@ -365,17 +369,17 @@ The main tasks for this exercise are as follows:
    Start-ADSyncSyncCycle -PolicyType Delta
    ```
 
-1. Switch to the Internet Explorer window displaying the **aduser1 | Profile** blade, refresh the page and note that the **Department** property is set to **Sales**.
+1. Switch to the Internet Explorer window displaying the **aduser1 \| Profile** blade, refresh the page and note that the **Department** property is set to **Sales**.
 
     > **Note**: You might need to wait for another minute and refresh the page again if the **Department** attribute remains not set.
 
-1. On the **aduser1 | Profile** blade, select **Edit**.
+1. On the **aduser1 \| Profile** blade, select **Edit**.
 
-1. On the **aduser1 | Profile** blade, in the **Settings** section, in the **Usage location** drop-down list, select **United States** and then select **Save**.
+1. On the **aduser1 \| Profile** blade, in the **Settings** section, in the **Usage location** drop-down list, select **United States** and then select **Save**.
 
-1. On the **aduser1 | Profile** blade, select **Licenses**.
+1. On the **aduser1 \| Profile** blade, select **Licenses**.
 
-1. On the **aduser1 | Licenses** blade, select **+ Assignments**.
+1. On the **aduser1 \| Licenses** blade, select **+ Assignments**.
 
 1. On the **Update license assignments** blade, select the **Azure Active Directory Premium P2** checkbox and select **Save**.
 
@@ -406,11 +410,11 @@ The main tasks for this exercise are as follows:
 
 #### Task 2: Create an Azure AD conditional access policy
 
-1. On the **Adatum Lab | Properties** blade, in the **Manage** section, select the **Security**.
+1. On the **Adatum Lab \| Properties** blade, in the **Manage** section, select the **Security**.
 
-1. On the **Security | Getting started** blade, select **Conditional Access**.
+1. On the **Security \| Getting started** blade, select **Conditional Access**.
 
-1. On the **Conditional Access | Policies** blade, select **+ New policy**.
+1. On the **Conditional Access \| Policies** blade, select **+ New policy**.
 
 1. On the **New** blade, in the **Name** text box, type **Azure portal MFA enforcement**. 
 
@@ -425,7 +429,7 @@ The main tasks for this exercise are as follows:
 
 #### Task 3: Verify Azure AD conditional access
 
-1. Within the Remote Desktop session to **az30410a-vm1**, start a new **InPrivate Browsing** Internet Explorer window and navigate to the Access Panel Applications portal [https://account.activedirectory.windowsazure.com](https://account.activedirectory.windowsazure.com).
+1. Within the Remote Desktop session to **az30410a-vm1**, start a new **InPrivate Browsing** Internet Explorer window and navigate to the Access Panel Applications portal [https://myapplications.microsoft.com](https://myapplications.microsoft.com).
 
 1. When prompted, sign in by using the synchronized Azure AD account of the **aduser1**, using the full user name you recorded in the previous exercise and the **Pa55w.rd1234** password. 
 
@@ -470,6 +474,8 @@ The main tasks for this exercise are as follows:
    ```powershell
    Set-MsolDirSyncEnabled -EnableDirSync $false -Force
    ```
+
+    > **Note**: If you receive an error message at this point, you might have to wait for up to 12 hours and try again.
 
 1. From the lab computer, in the browser window displaying the Azure portal, navigate to the **Azure Active Directory Premium P2 - Licensed users** blade, select the user accounts to which you assigned licenses in this lab, select **Remove license**, and, when prompted to confirm, select **OK**.
 
