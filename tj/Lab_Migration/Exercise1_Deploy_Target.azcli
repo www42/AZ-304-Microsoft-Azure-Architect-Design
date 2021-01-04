@@ -1,0 +1,8 @@
+location=$(az group list --query "[?name=='az30308a-labRG'].location" --output tsv)
+echo $location
+
+az group create --name 'az30308c-labRG' --location $location
+az group list --query "sort_by([*].{name:name,location:location}, &name)" --output table | grep az30308
+
+cd tj/Lab_Migration/
+az deployment group create --resource-group 'az30308c-labRG' --template-file Exercise1_Target.json
