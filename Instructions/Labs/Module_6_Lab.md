@@ -78,7 +78,6 @@ The main tasks for this exercise are as follows:
     | Server admin login | **sqladmin** |
     | Password | **Pa55w.rd1234** |
     | Location | the name of an Azure region where you can provision SQL databases |
-    | Allow Azure services to access server | ***Select the checkbox*** |
 
 1. Next to the **Compute + storage** label, select the **Configure database** link.
 
@@ -90,9 +89,9 @@ The main tasks for this exercise are as follows:
 
     | Setting | Value | 
     | --- | --- |
-    | Connectivity method | **Public endpoint** |    
-    | Allow Azure services and resources to access this server | **Yes** |
-    | Add current client IP address | **No** |
+    | Connectivity method | **Public endpoint** |  
+    | Allow Azure services and resources to access this server | **No** |
+    | Add current client IP address | **Yes** |
 
 1. Select **Next: Additional settings >**. 
 
@@ -101,7 +100,7 @@ The main tasks for this exercise are as follows:
     | Setting | Value | 
     | --- | --- |
     | Use existing data | **Sample** |
-    | Enable advanced data security | **Not now** |
+    | Enable Azure Defender for SQL | **Not now** |
 
 1. Select **Review + create** and then select **Create**. 
 
@@ -313,6 +312,12 @@ The main tasks for this exercise are as follows:
 
    ```sh
    az group list --query "[?starts_with(name,'az30303')]".name --output tsv | xargs -L1 bash -c 'az group delete --name $0 --no-wait --yes'
+   ```
+
+1. From the Cloud Shell pane, run the following to remove the folder named **az30303a1**:
+
+   ```sh
+   rm -r ~/az30303a1
    ```
 
 1. Close the Cloud Shell pane.

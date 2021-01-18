@@ -49,11 +49,11 @@ Estimated Time: 60 minutes
 
 ## Lab Files
 
--  \\\\AZ303\\AllFiles\\Labs\\04\\azuredeploy30304suba.json
+-  \\\\AZ304\\AllFiles\\Labs\\04\\azuredeploy30304suba.json
 
--  \\\\AZ303\\AllFiles\\Labs\\04\\azuredeploy30304rga.json
+-  \\\\AZ304\\AllFiles\\Labs\\04\\azuredeploy30304rga.json
 
--  \\\\AZ303\\AllFiles\\Labs\\04\\azuredeploy30304rga.parameters.json
+-  \\\\AZ304\\AllFiles\\Labs\\04\\azuredeploy30304rga.parameters.json
 
 ## Instructions
 
@@ -74,7 +74,13 @@ The main tasks for this exercise are as follows:
 
     >**Note**: If this is the first time you are starting **Cloud Shell** and you are presented with the **You have no storage mounted** message, select the subscription you are using in this lab, and select **Create storage**. 
 
-1. In the toolbar of the Cloud Shell pane, select the **Upload/Download files** icon, in the drop-down menu select **Upload**, and upload the file **\\\\AZ303\\AllFiles\Labs\\04\\azuredeploy30304suba.json** into the Cloud Shell home directory.
+1. From the Cloud Shell pane, run the following to register the **Microsoft.EventGrid** provider in your subscription:
+
+   ```powershell
+   Register-AzResourceProvider -ProviderNamespace 'Microsoft.EventGrid'
+   ```
+
+1. In the toolbar of the Cloud Shell pane, select the **Upload/Download files** icon, in the drop-down menu select **Upload**, and upload the file **\\\\AZ304\\AllFiles\Labs\\04\\azuredeploy30304suba.json** into the Cloud Shell home directory.
 
 1. From the Cloud Shell pane, run the following to create a resource groups (replace the `<Azure region>` placeholder with the name of the Azure region that is available for deployment of Azure VMs in your subscription and which is closest to the location of your lab computer):
 
@@ -90,9 +96,9 @@ The main tasks for this exercise are as follows:
 
       > **Note**: To identify Azure regions where you can provision Azure VMs, refer to [**https://azure.microsoft.com/en-us/regions/offers/**](https://azure.microsoft.com/en-us/regions/offers/)
 
-1. From the Cloud Shell pane, upload the Azure Resource Manager template **\\\\AZ303\\AllFiles\Labs\\04\\azuredeploy30304rga.json**.
+1. From the Cloud Shell pane, upload the Azure Resource Manager template **\\\\AZ304\\AllFiles\Labs\\04\\azuredeploy30304rga.json**.
 
-1. From the Cloud Shell pane, upload the Azure Resource Manager parameter file **\\\\AZ303\\AllFilesLabs\\04\\azuredeploy30304rga.parameters.json**.
+1. From the Cloud Shell pane, upload the Azure Resource Manager parameter file **\\\\AZ304\\AllFilesLabs\\04\\azuredeploy30304rga.parameters.json**.
 
 1. From the Cloud Shell pane, run the following to deploy a Azure VM running Windows Server 2019 that you will be using in this lab:
 
@@ -132,7 +138,7 @@ The main tasks for this exercise are as follows:
 1. From the Cloud Shell pane, run the following to create a new Azure AD service principal associated with the application you created in the previous step:
 
    ```powershell
-   New-AzADServicePrincipal -ApplicationId $az30304aadapp.ApplicationId.Guid
+   New-AzADServicePrincipal -ApplicationId $az30304aadapp.ApplicationId.Guid -SkipAssignment
    ```
 
 1. In the output of the **New-AzADServicePrincipal** command, note the value of the **ApplicationId** property. You will need it later in this exercise.
@@ -236,7 +242,7 @@ The main tasks for this exercise are as follows:
 
 1. Select the ellipsis symbol in the upper right corner of the **Condition** tile, in the pop-up menu, select **Rename**, and replace **Condition** with the text **If a virtual machine in the resource group has changed**. 
 
-1. Select the **Choose a value** text box on the left hand side of the condition, in the pop up window, and in the **Expression** tab, enter this expression:
+1. Select the **Choose a value** text box on the left hand side of the condition, in the pop up window, in the **Expression** tab, enter this expression and select **OK**:
 
    ```
    triggerBody()?['data']['operationName']
@@ -253,7 +259,7 @@ The main tasks for this exercise are as follows:
 
 #### Task 4: Add an action to the Azure logic app
 
-1. In the the Azure portal, on the Logic App Designer blade of the newly provisioned Azure logic app, in the **If true** tile, select **Add an action**. 
+1. In the the Azure portal, on the Logic App Designer blade of the newly provisioned Azure logic app, in the **True** tile, select **Add an action**. 
 
 1. In the **Choose an action** pane, in the **Search connectors and actions** text box, type **Outlook**.
 
@@ -309,7 +315,7 @@ The main tasks for this exercise are as follows:
     | --- | --- |
     | Name | **event-subscription-az30304a-LabRG** |
     | Event Schema | **Event Grid Schema** |
-    | System Topic name | **event-topic-az30304a-LabRG** |
+    | System Topic name | **az30304b-eventgridtopic** |
     | Filter to Event Types | **Resource Write Success**, **Resource Delete Success**, **Resource Action Success** |
     | Endpoint Type | **Web Hook** | 
     | Endpoint | the URL string you copied at the beginning of this task |
