@@ -1,0 +1,68 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {"location": {
+        "type": "string",
+        "defaultValue": "[resourceGroup().location]"
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "comments": "Migration target virtual network.",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "az30308c-migration-vnet",
+            "apiVersion": "2019-12-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.8.0.0/16"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "subnet0",
+                        "properties": {
+                            "addressPrefix": "10.8.0.0/24"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "comments": "Test virtual network.",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "az30308c-test-vnet",
+            "apiVersion": "2019-12-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.8.0.0/16"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "subnet0",
+                        "properties": {
+                            "addressPrefix": "10.8.0.0/24"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "migration30469118",
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2019-06-01",
+            "location": "[resourceGroup().location]",
+            "kind": "StorageV2",
+            "sku": {
+                "name": "Standard_LRS"
+            }
+        }        
+    ],
+    "outputs": {}
+}

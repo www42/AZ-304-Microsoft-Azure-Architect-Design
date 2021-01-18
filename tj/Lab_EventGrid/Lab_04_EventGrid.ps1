@@ -4,12 +4,7 @@
 
 # similar to AZ-300T04 Mod 01 Lab
 
-# MSDN Subscription
-$SubscriptionName = "MSDN-Plattformen"
-$SubscriptionId = "ffcb38a5-8428-40c4-98b7-77013eac7ec5"
-$TenantId = "819ebf55-0973-4703-b006-581a48f25961"
-
-Connect-AzAccount -Tenant $TenantId -Subscription $SubscriptionId
+Connect-AzAccount
 Get-AzContext  | fl *
 
 # Exercise 0: Prepare the lab environment
@@ -18,17 +13,17 @@ Get-AzContext  | fl *
 dir Allfiles/Labs/04/azuredeploy30304suba.json              # RG
 dir Allfiles/Labs/04/azuredeploy30304rga.json               # VM, Nic, VNet, PiP, NSG
 
-cp  Allfiles/Labs/04/azuredeploy30304*.json $env:HOME
+cp  Allfiles/Labs/04/azuredeploy30304*.json $HOME
 
 # Deploy RG
 $location = 'westeurope'
 New-AzSubscriptionDeployment `
-  -Location $location `
-  -Name az30304subaDeployment `
-  -TemplateFile $HOME/azuredeploy30304suba.json `
-  -rgLocation $location `
+-Location $location `
+-Name az30304subaDeployment `
+-TemplateFile $HOME/azuredeploy30304suba.json `
+-rgLocation $location `
   -rgName 'az30304a-labRG'
-
+  
 # Deploy VM (Windows server 2019), etc
 New-AzResourceGroupDeployment `
   -Name az30304rgaDeployment `
@@ -36,21 +31,22 @@ New-AzResourceGroupDeployment `
   -TemplateFile $HOME/azuredeploy30304rga.json `
   -TemplateParameterFile $HOME/azuredeploy30304rga.parameters.json `
   -AsJob
+  
+Get-Job
+  
 
-$rga = Get-Job -Id 1
-Receive-Job -Job $rga
-
+Register-AzResourceProvider -ProviderNamespace 'Microsoft.EventGrid'
 
 # Exercise 1: Configure authentication and authorization for an Azure logic app
 # -----------------------------------------------------------------------------
-$password = 'Pa55w.rd1234'
+$password = 'Pa55w.rd1234.@z304'
 $securePassword = ConvertTo-SecureString -Force -AsPlainText -String $password
 $az30304aadapp = New-AzADApplication -DisplayName 'az30304aadsp' `
                                      -HomePage 'http://az30304aadsp' `
                                      -IdentifierUris 'http://az30304aadsp' `
                                      -Password $securePassword
 
-New-AzADServicePrincipal -ApplicationId $az30304aadapp.ApplicationId.Guid                                  
+New-AzADServicePrincipal -ApplicationId $az30304aadapp.ApplicationId.Guid -SkipAssignment                                  
 
 $ApplicationId = Get-AzADServicePrincipal -DisplayName az30304aadsp | % ApplicationId
 
@@ -59,7 +55,7 @@ $TenantId = Get-AzSubscription | % TenantId
 
 # Task 2
 # Portal: az30304aadsp -> Reader -> az30304a-labRG
-# Unnecessary - SP is already Contributor at subscription level
+
 
 
 # Exercise 2: Implement an Azure logic app
