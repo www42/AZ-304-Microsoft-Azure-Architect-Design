@@ -48,7 +48,7 @@ Estimated Time: 120 minutes
 
 ## Lab Files
 
--  \\\\AZ303\\AllFiles\\Labs\\08\\azuredeploy30308suba.json
+-  \\\\AZ304\\AllFiles\\Labs\\08\\azuredeploy30308suba.json
 
 
 ### Exercise 0: Prepare the lab environment
@@ -448,8 +448,6 @@ The main tasks for this exercise are as follows:
 
    >**Note**: You might refresh the page again. 
 
-1. On the **Assess servers** blade, set **Assessment name** to **az30308a-assessment** and select the **Edit** link next to the **Assessment properties** label.
-
 1. On the **Assessment properties** blade, specify the following settings (leave others with their default values) and select **Save**:
 
     | Setting | Value | 
@@ -468,6 +466,8 @@ The main tasks for this exercise are as follows:
    >**Note**: Considering the limited time inherent to the lab environment, the only viable option in this case is **As on-premises** assessment. 
 
 1. Back on the **Assess servers** blade, select **Next** and then navigate to the **Select machines to assess** tab.
+
+1. Set **Assessment name** to **az30308a-assessment**.
 
 1. Ensure that the **Create new** option is selected, set the group name to **az30308a-assessment-group**, in the list of machines to be added to the group, select **az30308a-vm1**.
 
