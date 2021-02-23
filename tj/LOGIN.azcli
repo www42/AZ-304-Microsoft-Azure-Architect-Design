@@ -1,0 +1,10 @@
+az login
+
+az account list --query "[].{name:name,isDefault:isDefault,state:state,subscriptionId:id,user:user.name}" --output table
+
+subscriptionId='c46281f7-38b7-4e1d-ba22-140cd892cd07'
+az account set --subscription $subscriptionId
+
+az account show
+
+az group list -o table
