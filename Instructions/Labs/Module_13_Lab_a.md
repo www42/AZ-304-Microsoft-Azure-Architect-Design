@@ -165,7 +165,7 @@ The main tasks for this exercise are as follows:
     | Setting | Value | 
     | --- | --- |
     | Role | **Reader** |
-    | Assign access to | **Azure AD user, group, or service principal** |
+    | Assign access to | **User, group, or service principal** |
     | Select | **az30304aadsp** |
 
 
@@ -184,7 +184,7 @@ The main tasks for this exercise are as follows:
 
 #### Task 1: Create an Azure logic app
 
-1. In the Azure portal, search for and select **Logic App** and, on the **Logic Apps** blade, select **+ Add**.
+1. In the Azure portal, search for and select **Logic App** and, on the **Logic Apps** blade, select **+ Add** the select **Consumption**.
 
 1. On the **Basics** tab of the **Logic App** blade, specify the following settings (leave others with their default values):
 
@@ -223,7 +223,7 @@ The main tasks for this exercise are as follows:
 
     | Setting | Value | 
     | --- | --- |
-    | Subscription | the value of subscription **Id** property you identified earlier in this exercise |
+    | Subscription | Choose your subscription from the drop-down list |
     | Resource Type | **Microsoft.Resources.resourceGroups** |
     | Resource Name | **az30304a-labRG** |
     | Event Type Item - 1 | **Microsoft.Resources.ResourceWriteSuccess** |
@@ -238,7 +238,7 @@ The main tasks for this exercise are as follows:
 
 1. In the the Azure portal, on the Logic App Designer blade of the newly provisioned Azure logic app, select **+ New step**. 
 
-1. In the choose an action tile, use the **Search connectors and triggers** text box, to search for **Condition**, in the list of results, in the **Actions** column, select **Condition** to add it to the designer workspace.
+1. In the choose an operation tile, use the **Search connectors and actions** text box, to search for **Condition**, in the list of results, in the **Actions** column, select **Condition** to add it to the designer workspace.
 
 1. Select the ellipsis symbol in the upper right corner of the **Condition** tile, in the pop-up menu, select **Rename**, and replace **Condition** with the text **If a virtual machine in the resource group has changed**. 
 
@@ -301,7 +301,7 @@ The main tasks for this exercise are as follows:
 
 #### Task 1: Configure event subscription
 
-1. In the Azure portal, navigate to the **az30304b-logicapp1** blade, in the **Summary** section, select **See trigger history**. 
+1. In the Azure portal, navigate to the **az30304b-logicapp1** blade, in the **Summary** section, select **Trigger history**. 
 
 1. On the **When_a_resource_event_occurs** blade, copy the value of the **Callback url [POST]** text box.
 

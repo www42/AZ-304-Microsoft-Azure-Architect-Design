@@ -93,6 +93,14 @@ The main tasks for this exercise are as follows:
     | Allow Azure services and resources to access this server | **No** |
     | Add current client IP address | **Yes** |
 
+1. Select **Next: Security >**.
+
+1. On the **Security** tab of the **Create SQL Database** blade, specify the following settings (leave others with their default values):
+
+    | Setting | Value | 
+    | --- | --- |
+    | Enable Azure Defender for SQL | **Not now** |
+
 1. Select **Next: Additional settings >**. 
 
 1. On the **Additional settings** tab of the **Create SQL Database** blade, specify the following settings (leave others with their default values):
@@ -100,7 +108,6 @@ The main tasks for this exercise are as follows:
     | Setting | Value | 
     | --- | --- |
     | Use existing data | **Sample** |
-    | Enable Azure Defender for SQL | **Not now** |
 
 1. Select **Review + create** and then select **Create**. 
 
@@ -281,8 +288,8 @@ The main tasks for this exercise are as follows:
     | Setting | Value | 
     | --- | --- |
     | Rule name | **cloudshell** |
-    | Start IP | the IP addres you identified earlier in this task |
-    | End IP | the IP addres you identified earlier in this task |
+    | Start IP | the IP address you identified earlier in this task |
+    | End IP | the IP address you identified earlier in this task |
 
     >**Note**: Obviously this is meant for the lab purposes only, since that IP address will change after you restart the Cloud Shell session.
 

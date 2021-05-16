@@ -107,7 +107,8 @@ The main tasks for this exercise are as follows:
 
 1. In the Azure portal, close the **Cloud Shell** pane.
 
-1. From your lab computer, open another browser tab and navigate to the [https://github.com/Azure/azure-quickstart-templates/tree/master/active-directory-new-domain](https://github.com/Azure/azure-quickstart-templates/tree/master/active-directory-new-domain). 
+1. From your lab computer, open another browser tab and navigate to the [https://github.com/Azure/azure-quickstart-templates/tree/master/application-workloads/active-directory/active-directory-new-domain](https://github.com/Azure/azure-quickstart-templates/tree/master/application-workloads/active-directory/active-directory-new-domain).
+
 
 1. On the **Create a new Windows VM and create a new AD Forest, Domain and DC** page, select **Deploy to Azure**. This will automatically redirect the browser to the **Create an Azure VM with a new AD Forest** blade in the Azure portal.
 
@@ -289,7 +290,9 @@ The main tasks for this exercise are as follows:
 
 #### Task 3: Install Azure AD Connect
 
-1. Within the Remote Desktop session to **az30410a-vm1**, start Internet Explorer, navigate to the [Azure portal](https://portal.azure.com), and sign in by using the **az30410-aaduser1** user account you created the previous exercise. When prompted, specify the full user name you recorded and the **Pa55w.rd1234** password.
+1. Within the Remote Desktop session to **az30410a-vm1**, start Internet Explorer, navigate to the download page of [Microsoft Edge](https://www.microsoft.com/en-us/edge/business/download), download Microsoft Edge installer and perform the installation. 
+
+1. Within the Remote Desktop session to **az30410a-vm1**, in Microsoft Edge, navigate to the [Azure portal](https://portal.azure.com), and sign in by using the **az30410-aaduser1** user account you created the previous exercise. When prompted, specify the full user name you recorded and the **Pa55w.rd1234** password.
 
 1. In the Azure portal, search for and select **Azure Active Directory** and, on the **Adatum Lab | Overview** blade, select **Azure AD Connect**.
 
@@ -341,7 +344,7 @@ The main tasks for this exercise are as follows:
 
 #### Task 4: Configure properties of synchronized user accounts
 
-1. Within the Remote Desktop session to **az30410a-vm1**, in the Internet Explorer window displaying the Azure portal, navigate to the **Users - All users** blade of the Adatum Lab Azure AD tenant.
+1. Within the Remote Desktop session to **az30410a-vm1**, in the Microsoft Edge window displaying the Azure portal, navigate to the **Users - All users** blade of the Adatum Lab Azure AD tenant.
 
 1. On the **Users \| All users** blade, note that the list of user objects includes the **aduser1** account, with the **Yes** entry appearing in the **Directory synced** column.
 
@@ -369,7 +372,7 @@ The main tasks for this exercise are as follows:
    Start-ADSyncSyncCycle -PolicyType Delta
    ```
 
-1. Switch to the Internet Explorer window displaying the **aduser1 \| Profile** blade, refresh the page and note that the **Department** property is set to **Sales**.
+1. Switch to the Microsoft Edge window displaying the **aduser1 \| Profile** blade, refresh the page and note that the **Department** property is set to **Sales**.
 
     > **Note**: You might need to wait for another minute and refresh the page again if the **Department** attribute remains not set.
 
@@ -399,7 +402,7 @@ The main tasks for this exercise are as follows:
 
 #### Task 1: Disable Azure AD security defaults.
 
-1. Within the Remote Desktop session to **az30410a-vm1**, in the Internet Explorer window displaying the Azure portal, navigate to the **Adatum Lab | Overview** blade of the Adatum Lab Azure AD tenant.
+1. Within the Remote Desktop session to **az30410a-vm1**, in the Microsoft Edge window displaying the Azure portal, navigate to the **Adatum Lab | Overview** blade of the Adatum Lab Azure AD tenant.
 
 1. On the **Adatum Lab | Overview** blade, in the **Manage** section, select **Properties**.
 
@@ -429,7 +432,7 @@ The main tasks for this exercise are as follows:
 
 #### Task 3: Verify Azure AD conditional access
 
-1. Within the Remote Desktop session to **az30410a-vm1**, in the **Internet Explorer** window, select **Settings** menu header, in the **Settings** menu, select **Safety**, in the cascading menu, select **InPrivate Browsing**, and, in the InPrivate Internet Explorer window, navigate to the Access Panel Applications portal [https://myapplications.microsoft.com](https://myapplications.microsoft.com).
+1. Within the Remote Desktop session to **az30410a-vm1**, in the **Microsoft Edge** window, select **Settings** menu header, in the **Settings** menu, select **Safety**, in the cascading menu, select **InPrivate Browsing**, and, in the InPrivate Microsoft Edge window, navigate to the Access Panel Applications portal [https://myapplications.microsoft.com](https://myapplications.microsoft.com).
 
 1. When prompted, sign in by using the synchronized Azure AD account of the **aduser1**, using the full user name you recorded in the previous exercise and the **Pa55w.rd1234** password. 
 
@@ -446,7 +449,7 @@ The main tasks for this exercise are as follows:
 
 #### Task 4: Remove Azure resources deployed in the lab
 
-1. Within the Remote Desktop session to **az30410a-vm1**, start Internet Explorer and browse to the Microsoft Online Services Sign-In Assistant for IT Professionals RTW at [https://go.microsoft.com/fwlink/p/?LinkId=286152](https://www.microsoft.com/en-us/Download/confirmation.aspx?id=28177). 
+1. Within the Remote Desktop session to **az30410a-vm1**, start Microsoft Edge and browse to the Microsoft Online Services Sign-In Assistant for IT Professionals RTW at [https://www.microsoft.com/en-us/Download/details.aspx?id=28177](https://www.microsoft.com/en-us/Download/details.aspx?id=28177). 
 
 1. On the Microsoft Online Services Sign-In Assistant for IT Professionals RTW download page, select **Download**, on the **Choose the download you want** page, select **en\msoidcli_64.msi**, and select **Next**. 
 
