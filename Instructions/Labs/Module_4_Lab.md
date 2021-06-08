@@ -207,11 +207,11 @@ The main tasks for this exercise are as follows:
 
 1. On the **Azure Active Directory Premium P2 \| Licensed users** blade, select **+ Assign**. 
 
-1. On the **Assign license** blade, select **Users**, and on the **Users** blade, select both your account and the **az30410-aaduser1** user account and click **Select** for each.
+1. On the **Assign license** blade, select **Add users and groups**, and on the **Add users and groups** blade, select both your account and the **az30410-aaduser1** user account and click **Select** for each.
 
 1. Back on the **Assign license** blade, select **Assignment options**, review the options listed on the **License options** blade, and select **OK**.
 
-1. On the **Assign license** blade, select **Assign**. 
+1. On the **Assign license** blade, select **Review and Assign** the on the **Assign** page, select **Assign**. 
 
 
 ### Exercise 2: Integrate an AD DS forest with an Azure AD tenant
@@ -290,7 +290,13 @@ The main tasks for this exercise are as follows:
 
 #### Task 3: Install Azure AD Connect
 
-1. Within the Remote Desktop session to **az30410a-vm1**, start Internet Explorer, navigate to the download page of [Microsoft Edge](https://www.microsoft.com/en-us/edge/business/download), download Microsoft Edge installer and perform the installation. 
+1. Within the Remote Desktop session to **az30410a-vm1**, start Internet Explorer, navigate to the download page of [Microsoft Edge](https://www.microsoft.com/en-us/edge/business/download), then scroll down until you see the Channel, Build, and Platform options.
+
+1. In Select channel/version dropdown select the version indicating Stable ## (Current and supported).
+
+1. In Select build dropdown select the newest build.
+
+1. In Select platform dropdown select Windows 64-bit. Then click Download.
 
 1. Within the Remote Desktop session to **az30410a-vm1**, in Microsoft Edge, navigate to the [Azure portal](https://portal.azure.com), and sign in by using the **az30410-aaduser1** user account you created the previous exercise. When prompted, specify the full user name you recorded and the **Pa55w.rd1234** password.
 
@@ -449,7 +455,7 @@ The main tasks for this exercise are as follows:
 
 #### Task 4: Remove Azure resources deployed in the lab
 
-1. Within the Remote Desktop session to **az30410a-vm1**, start Microsoft Edge and browse to the Microsoft Online Services Sign-In Assistant for IT Professionals RTW at [https://www.microsoft.com/en-us/Download/details.aspx?id=28177](https://www.microsoft.com/en-us/Download/details.aspx?id=28177). 
+1. Within the Remote Desktop session to **az30410a-vm1**, start Microsoft Edge and browse to the Microsoft Online Services Sign-In Assistant for IT Professionals RTW at [https://download.microsoft.com/download/7/1/E/71EF1D05-A42C-4A1F-8162-96494B5E615C/msoidcli_64bit.msi](**https://www.microsoft.com/en-us/Download/details.aspx?id=28177**). 
 
 1. On the Microsoft Online Services Sign-In Assistant for IT Professionals RTW download page, select **Download**, on the **Choose the download you want** page, select **en\msoidcli_64.msi**, and select **Next**. 
 

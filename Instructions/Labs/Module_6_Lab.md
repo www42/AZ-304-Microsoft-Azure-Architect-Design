@@ -60,7 +60,7 @@ The main tasks for this exercise are as follows:
 
 1. From your lab computer, start a web browser, navigate to the [Azure portal](https://portal.azure.com), and sign in by providing credentials of a user account with the Owner role in the subscription you will be using in this lab.
 
-1. In the Azure portal, search for and select **SQL database** and, on the **SQL databases** blade, select **+ Add**.
+1. In the Azure portal, search for and select **SQL database** and, on the **SQL databases** blade, select **+ Create**.
 
 1. On the **Basics** tab of the **Create SQL Database** blade, specify the following settings (leave others with their default values):
 

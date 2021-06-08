@@ -193,8 +193,7 @@ The main tasks for this exercise are as follows:
     | Subscription | the name of the Azure subscription you are using in this lab |
     | Resource group | the name of a new resource group **az30304b-labRG** |
     | Logic App name | **az30304b-logicapp1** | 
-    | Select the location | **Region** |
-    | Location | the name of an Azure region that you chose in the previous exercise |
+    | Select the location | the name of an Azure region that you chose in the previous exercise |
     | Log Analytics | **Off** |
 
 1. Select **Review + create** and then select **Create**. 
@@ -301,7 +300,7 @@ The main tasks for this exercise are as follows:
 
 #### Task 1: Configure event subscription
 
-1. In the Azure portal, navigate to the **az30304b-logicapp1** blade, in the **Summary** section, select **Trigger history**. 
+1. In the Azure portal, navigate to the **az30304b-logicapp1** blade, select **Trigger history**. 
 
 1. On the **When_a_resource_event_occurs** blade, copy the value of the **Callback url [POST]** text box.
 
