@@ -1,0 +1,111 @@
+# ============================================================================================================
+# Tutorial: Use a managed identity to connect Key Vault to an Azure web app in .NET
+# ============================================================================================================
+# 
+# https://docs.microsoft.com/en-us/azure/key-vault/general/tutorial-net-create-vault-azure-web-app
+
+
+
+# Prerequisites
+# ------------------------------------------------------------------------------------------------------------
+#   * Azure subscription
+az account show
+#
+#   * .Net Core 3.1 SDK or later
+dotnet --list-sdks
+#
+#   * git version 2.28.0 or greater
+git --version
+#
+#   * Azure key vault
+az keyvault list --query "[].{name:name,location:location,resourceGroup:resourceGroup}" --output table
+KVNAME='kv-dotnet'
+#
+#   * Key vault secret
+az keyvault secret list --vault-name $KVNAME --query "[].{name:name,url:id}" --output table
+
+
+
+# Create a .NET Core app
+# ------------------------------------------------------------------------------------------------------------
+dotnet new web
+dotnet run
+
+# Goto http://localhost:5000
+# See 'Hello World!'
+
+# Deploy the app to Azure
+# ------------------------------------------------------------------------------------------------------------
+# Create local git repo
+git init
+git add .
+git commit -m "Initial commit"
+
+# Configure user scope credentials required for local git deployment
+USERNAME=kvdotnetuser$RANDOM
+PASSWORD=kvdotnetpass$RANDOM
+echo $USERNAME
+echo $PASSWORD
+
+az webapp deployment user set --user-name $USERNAME --password $PASSWORD 
+
+# Create app service
+RGNAME='akvwebapp-RG'
+APPNAME='akvwebapp5832'
+az group create --name $RGNAME --location westeurope
+az appservice plan create --name "$APPNAME-plan" --resource-group $RGNAME --sku FREE
+az webapp create --name $APPNAME --resource-group $RGNAME --plan "$APPNAME-plan"
+
+# Set deployment source to local git
+az webapp deployment source config-local-git --name $APPNAME --resource-group $RGNAME
+
+# Get remote repo URL
+URL=$(az webapp deployment list-publishing-credentials --name $APPNAME --resource-group $RGNAME --query scmUri --output tsv)
+# https://$akvwebapp5832:ivohogWewZg290DQle5wpqgbZLpMmXfplqjpmjlfqCeZqeyrLoG7KlEukkZz@akvwebapp5832.scm.azurewebsites.net
+
+git remote add azure $URL
+git remote -v
+
+# Deploy app
+git push azure master
+
+# Goto http://$APPNAME.azurewebsites.net
+# See 'Hello World!'
+
+
+
+# Configure the web app to connect to Key Vault
+# ------------------------------------------------------------------------------------------------------------
+
+# Assign system managed identity to web app
+az webapp identity assign --name $APPNAME --resource-group $RGNAME
+ID=$(az webapp identity show --name $APPNAME --resource-group $RGNAME --query "principalId" --output tsv)
+
+az keyvault set-policy --name $KVNAME --object-id $ID --secret-permissions get list
+
+
+# Use Azure Key Vault secret client library 
+
+dotnet add package Azure.Identity
+dotnet add package Azure.Security.KeyVault.Secrets
+
+# If you receive
+#       error: There are no versions available for the package 'Azure.Identity'
+# try
+#       dotnet nuget add source --name nuget.org https://api.nuget.org/v3/index.json
+
+# Edit Startup.cs as described in the tutorial
+
+# Redeploy app
+git add .
+git commit -m "Updated web app to access my key vault"
+git push azure master
+
+# The end.
+# ------------------------------------------------------------------------------------------------------------
+
+
+
+
+# Another tutorial: Use Key Vault from App Service with Azure Managed Identity
+# https://github.com/Azure-Samples/app-service-msi-keyvault-dotnet/tree/master/
