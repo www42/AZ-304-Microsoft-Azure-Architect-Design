@@ -72,7 +72,7 @@ The main tasks for this exercise are as follows:
 
 1. In the toolbar of the Cloud Shell pane, select the **Upload/Download files** icon, in the drop-down menu select **Upload**, and upload the file **\\\\AZ303\\AllFiles\Labs\\08\\azuredeploy30308suba.json** into the Cloud Shell home directory.
 
-1. From the Cloud Shell, run the following command to set a variable named location with an Azure Region near you (replace the '<Azure region>' placeholder with the name of the Azure region that is available for deployment of Azure VMs in your subscription and which is closest to the location of your lab computer, for example 'eastus'):
+1. From the Cloud Shell, run the following command to set a variable named location with an Azure Region near you (replace the '&lt;Azure region&gt;' placeholder with the name of the Azure region that is available for deployment of Azure VMs in your subscription and which is closest to the location of your lab computer, for example 'eastus'):
 
    ```powershell
    $location = '<Azure region>'
@@ -93,7 +93,7 @@ The main tasks for this exercise are as follows:
 
 1. In the Azure portal, close the **Cloud Shell** pane.
 
-1. From your lab computer, open another browser tab, navigate to the [301-nested-vms-in-virtual-network Azure QuickStart template](https://github.com/Azure/azure-quickstart-templates/tree/master/demos/nested-vms-in-virtual-network) and select **Deploy to Azure**. This will automatically redirect the browser to the **Hyper-V Host Virtual Machine with nested VMs** blade in the Azure portal.
+1. From your lab computer, open another browser tab, navigate to the [301-nested-vms-in-virtual-network Azure QuickStart template](https://github.com/Azure/azure-quickstart-templates/tree/master/demos/nested-vms-in-virtual-network) and select **Deploy to Azure** (you find the button **Deploy to Azure** in the `README.md` file after the list of the resources created by the template) . This will automatically redirect the browser to the **Hyper-V Host Virtual Machine with nested VMs** blade in the Azure portal.
 
     ``` url
     https://github.com/Azure/azure-quickstart-templates/tree/master/demos/nested-vms-in-virtual-network
@@ -131,7 +131,7 @@ The main tasks for this exercise are as follows:
 
     | Setting | Value | 
     | --- | --- |
-    | Destination port range | **3389** |
+    | Destination port ranges | **3389** |
     | Protocol | **Any** |
     | Name | **AllowRDPInBound** |
 

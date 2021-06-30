@@ -144,9 +144,9 @@ The main tasks for this exercise are as follows:
 
 1. In the Azure portal, search for and select **Azure Active Directory** and, on the Azure Active Directory blade, select **+ Create a tenant**.
 
-1. On the **Basics** tab of the **Create a directory** blade, select the **Azure Active Directory** option and select **Next: Configuration >**.
+1. On the **Basics** tab of the **Create a tenant** blade, select the **Azure Active Directory** option and select **Next: Configuration >**.
 
-1. On the **Configuration** tab of the **Create a directory** blade, specify the following settings (leave others with their existing values):
+1. On the **Configuration** tab of the **Create a tenant** blade, specify the following settings (leave others with their existing values):
 
     | Setting | Value |
     | --- | --- |
@@ -455,11 +455,9 @@ The main tasks for this exercise are as follows:
 
 #### Task 4: Remove Azure resources deployed in the lab
 
-1. Within the Remote Desktop session to **az30410a-vm1**, start Microsoft Edge and browse to the Microsoft Online Services Sign-In Assistant for IT Professionals RTW at [https://download.microsoft.com/download/7/1/E/71EF1D05-A42C-4A1F-8162-96494B5E615C/msoidcli_64bit.msi](**https://www.microsoft.com/en-us/Download/details.aspx?id=28177**). 
+1. Within the Remote Desktop session to **az30410a-vm1**, download the installation package of Microsoft Online Services Sign-In Assistant for IT Professionals RTW at [https://download.microsoft.com/download/7/1/E/71EF1D05-A42C-4A1F-8162-96494B5E615C/msoidcli_64bit.msi](**https://download.microsoft.com/download/7/1/E/71EF1D05-A42C-4A1F-8162-96494B5E615C/msoidcli_64bit.msi**). 
 
-1. On the Microsoft Online Services Sign-In Assistant for IT Professionals RTW download page, select **Download**, on the **Choose the download you want** page, select **en\msoidcli_64.msi**, and select **Next**. 
-
-1. When prompted, run **Microsoft Online Services Sign-in Assistant Setup** with the default options.
+1. Once you download `msi` package, run it with the default options.
 
 1. Once the setup completes, within the Remote Desktop session to **az30410a-vm1**, start **Windows PowerShell** console.
 
