@@ -1,0 +1,151 @@
+# ==================================================================================================
+# This script is based on the tutorial
+#
+#   "Use a managed identity to connect Key Vault to an Azure web app in .NET"
+#
+#   https://docs.microsoft.com/en-us/azure/key-vault/general/tutorial-net-create-vault-azure-web-app
+# 
+# ==================================================================================================
+
+
+# Create resource group
+# ---------------------
+LOCATION="westeurope"
+RGNAME="Security-RG"
+az group create --name $RGNAME --location $LOCATION
+
+RAND=$((1000 + $RANDOM % 8999))
+echo $RAND
+
+# Create key vault, put secret
+# ----------------------------
+KVNAME="kv$RAND"
+
+# If necessary register resource provider
+az provider register --namespace Microsoft.KeyVault
+az provider show --namespace Microsoft.KeyVault --query "{Namespace:namespace,RegistrationState:registrationState}" --output table
+
+# This creates a key vault (no HSM) with default access policy for actual user
+az keyvault create --name $KVNAME --location $LOCATION --resource-group $RGNAME --sku standard
+az keyvault show --name $KVNAME --resource-group $RGNAME --query "{name:name,location:location,resourceGroup:resourceGroup,vaultUri:properties.vaultUri}" --output table
+
+# Put secret
+SECRETNAME='StrengGeheim'
+SECRET='Pa55w.rd123456!'
+az keyvault secret set  --vault-name $KVNAME --name $SECRETNAME --value $SECRET
+az keyvault secret list --vault-name $KVNAME --query "[].{name:name,url:id}" --output table
+
+
+
+# Create (empty) webapp
+# ---------------------
+APPNAME="kvwebapp$RAND"
+APPPLANNAME="$APPNAME-plan"
+
+# Create service plan F1
+az appservice plan create --name $APPPLANNAME --resource-group $RGNAME --sku FREE
+az appservice plan list --query "[].{name:name,sku:sku.size,tier:sku.tier,resourceGroup:resourceGroup}" --output table
+
+# Create app service
+az webapp create --name $APPNAME --resource-group $RGNAME --plan $APPPLANNAME
+az webapp show --name $APPNAME --resource-group $RGNAME --query "{DefaultHostName:defaultHostName,Location:location,State:state,Identity:identity}" --output table
+
+
+# Assign managed identity to webapp
+# ---------------------------------
+az webapp identity assign --name $APPNAME --resource-group $RGNAME
+az webapp show --name $APPNAME --resource-group $RGNAME --query "{Identity:identity}"
+
+ID=$(az webapp identity show --name $APPNAME --resource-group $RGNAME --query "principalId" --output tsv)
+echo $ID
+
+
+# Give managed identity read permissions to secrets
+# -------------------------------------------------
+az keyvault set-policy --name $KVNAME --object-id $ID --secret-permissions get list
+
+# Get access policy for managed identity concerning secrets
+az keyvault show --name $KVNAME --query "properties.accessPolicies[?objectId=='$ID'].permissions.secrets" --output tsv
+
+
+# Set GitHub action to app service
+# --------------------------------
+#
+#   GitHub
+#       Organization:  www42
+#       Repository:    akvwebapp
+#       Branch:        master
+#   Build
+#       Runtime stack: .NET
+#       Version:       .NET Core 3.1 (LTS)
+
+REPONAME='www42/akvwebapp'
+REPOURL='https://github.com/www42/akvwebapp.git'
+
+az webapp deployment source config --name $APPNAME --resource-group $RGNAME --repo-url $REPOURL --branch master --repository-type github #  --> Build provider: App Service Build Service (not GitHub)
+az webapp deployment source config --name $APPNAME --resource-group $RGNAME --repo-url https://github.com/www42/hamburg.git --branch master --repository-type github #  --> Build provider: App Service Build Service (not GitHub)
+az webapp deployment source show --name $APPNAME --resource-group $RGNAME
+az webapp deployment source show --name $APPNAME --resource-group $RGNAME --query "{Kind:kind,RepoUrl:repoUrl,IsGitHubAction:isGitHubAction}" --output table
+az webapp deployment source delete --name $APPNAME --resource-group $RGNAME
+
+APPURL="https://$(az webapp show --name $APPNAME --resource-group $RGNAME --query 'defaultHostName' --output tsv)"
+echo $APPURL
+curl $APPURL
+
+
+
+
+
+# How to use Azure Key Vault secret client library
+# =================================================
+dotnet add package Azure.Identity
+dotnet add package Azure.Security.KeyVault.Secrets
+
+# If you receive
+#       error: There are no versions available for the package 'Azure.Identity'
+# try
+#       dotnet nuget add source --name nuget.org https://api.nuget.org/v3/index.json
+
+# ------Edit Startup.cs as described in the tutorial ----
+#       Don't forget 
+#           URL
+#           secret name
+# -------------------------------------------------------
+
+
+
+
+# Cleanup
+# =======
+az resource list --resource-group $RGNAME --query "[].{Name:name,Location:location,Type:type}" --output table
+az group delete --name $RGNAME --yes --no-wait
+
+az keyvault list --query "[].{name:name,location:location}" --output table
+az keyvault delete --name $KVNAME --resource-group $RGNAME
+
+az appservice plan list --query "[].{name:name,sku:sku.size,tier:sku.tier,numberOfSites:numberOfSites,resourceGroup:resourceGroup}" --output table
+az appservice plan delete --name $APPPLANNAME --resource-group $RGNAME --yes
+
+az webapp list --query "[].{Name:name,Location:location,defaultHostName:defaultHostName,State:state}" --output table
+az webapp delete --name $APPNAME --resource-group $RGNAME
+
+az webapp deployment source show --name $APPNAME --resource-group $RGNAME --query "{Kind:kind,RepoUrl:repoUrl,IsGitHubAction:isGitHubAction}" --output table
+az webapp deployment source delete --name $APPNAME --resource-group $RGNAME
+
+# Remove GitHub Secrets
+SECRETS=$(gh secret list --repo $REPONAME | awk '{print $1}')
+for SECRET in $SECRETS; do gh secret remove $SECRET --repo $REPONAME; done
+
+# Remove GitHub Action workflow
+
+
+
+
+
+
+
+
+# Another tutorial
+# ================
+# "Use Key Vault from App Service with Azure Managed Identity"
+# https://github.com/Azure-Samples/app-service-msi-keyvault-dotnet/tree/master/

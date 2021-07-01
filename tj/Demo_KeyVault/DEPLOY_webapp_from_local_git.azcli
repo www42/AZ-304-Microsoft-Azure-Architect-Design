@@ -1,0 +1,110 @@
+# =======================================================
+# Create a locale dotNet web app "Hello World"
+# Deploy web app to Azure (deployment source: local git)
+# =======================================================
+
+# Prerequisites
+# -------------
+dotnet --list-sdks   # .Net Core 3.1 SDK or later required
+git --version        # git version 2.28.0 or greater required
+
+
+# Create resource group
+# -------------------------------------------
+LOCATION="westeurope"
+RGNAME="Security-RG"
+az group create --name $RGNAME --location $LOCATION
+
+RAND=$((1000 + $RANDOM % 8999))
+echo $RAND
+
+# Create a .NET Core app in a local Git repo
+# ------------------------------------------
+
+# New folder, will become local git repo
+mkdir $HOME/git/akvwebapp
+cd    $HOME/git/akvwebapp
+
+# Create local web app
+dotnet new web
+dotnet run
+
+# Goto http://localhost:5000
+# See 'Hello World!'
+
+# Make folder a local git repo
+git init
+git add .
+git commit -m "First commit"
+
+# Configure deployment user for later use in Azure
+USERNAME="$APPNAME-user$RANDOM"
+PASSWORD="$APPNAME-pass$RANDOM$RANDOM"
+echo $USERNAME
+echo $PASSWORD
+
+az webapp deployment user set --user-name $USERNAME --password $PASSWORD
+# Question: What resource type is this in Azure? It's not an extention to web app, because web app not yet exists.
+#
+# Answer: 'Microsoft.Web/publishingUsers/web'
+
+
+
+# Deploy app to Azure
+# --------------------
+APPNAME="webapp$RAND"
+APPPLANNAME="$APPNAME-plan"
+
+# Create service plan F1
+az appservice plan create --name $APPPLANNAME --resource-group $RGNAME --sku FREE
+az appservice plan list --query "[].{name:name,sku:sku.size,tier:sku.tier,resourceGroup:resourceGroup}" --output table
+
+# Create (empty) app service
+az webapp create --name $APPNAME --resource-group $RGNAME --plan $APPPLANNAME
+az webapp show --name $APPNAME --resource-group $RGNAME --query "{DefaultHostName:defaultHostName,Location:location,State:state,Identity:identity}" --output table
+
+# Set deployment source to local git
+az webapp deployment source config-local-git --name $APPNAME --resource-group $RGNAME
+
+# Get remote repo URL
+URL=$(az webapp deployment list-publishing-credentials --name $APPNAME --resource-group $RGNAME --query scmUri --output tsv)
+echo $URL
+
+# Add git remote
+git remote -v
+git remote remove azure
+git remote add azure $URL
+
+# Deploy app
+git push azure master
+
+# Test
+WEBURL=$(az webapp show --name $APPNAME --resource-group $RGNAME --query "hostNames[0]" --output tsv)
+echo $WEBURL
+curl $WEBURL
+# or open $WEBURL in browser
+# See 'Hello World!'
+
+
+
+
+
+# Cleanup
+# -------
+
+# Web app
+az webapp list --query "[].{name:name,location:location,state:state}" --output table
+az webapp delete --name $APPNAME --resource-group $RGNAME
+
+# App service plan
+az appservice plan list --query "[].{name:name,sku:sku.size,tier:sku.tier,resourceGroup:resourceGroup}" --output table
+az appservice plan delete --name $APPPLANNAME --resource-group $RGNAME --yes
+
+# Resource group
+az group list --output table
+az resource list --resource-group $RGNAME --query "[].{name:name,resourceType:type}" --output table
+az group delete --name $RGNAME --yes --no-wait
+
+# git remote
+git remote -v
+git remote remove azure
